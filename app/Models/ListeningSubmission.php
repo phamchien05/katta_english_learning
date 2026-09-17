@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class ListeningSubmission extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['user_id', 'passage_id', 'score', 'total', 'answers'];
+
+    protected function casts(): array
+    {
+        return [
+            'answers' => 'array',
+        ];
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function passage(): BelongsTo
+    {
+        return $this->belongsTo(ListeningPassage::class, 'passage_id');
+    }
+}
